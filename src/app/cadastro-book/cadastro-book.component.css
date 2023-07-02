@@ -1,0 +1,80 @@
+@import '~materialize-css/dist/css/materialize.min.css';
+
+@import "~materialize-css/dist/css/materialize.css";
+@import "~material-icons/iconfont/material-icons.css";
+
+.collection-card {
+  margin-top: 1px;
+}
+
+.custom-collection-item {
+  height: auto;
+}
+
+.collection-card .collection-item {
+  border: 1px solid #fff;
+  border-radius: 15px;
+  margin: 5px;
+  background-color: transparent !important;
+}
+
+.collection-card .collection-header {
+  background-color: #9A9A9A;
+  color: black;
+  font-weight: bold;
+}
+
+.collection-item.custom-collection-item {
+  /* Customizations */
+  color: #4caf50;
+ display: flex;
+ align-items: center;
+  /* Add any other desired properties */
+}
+
+.progress-container .determinate {
+  background-color: #4caf50;
+}
+
+.card-title.black-text.bold {
+  font-weight:700;
+}
+
+.custom-row {
+  margin:0;
+  border:0;
+}
+
+.custom-row2 {
+  margin:0;
+  border:0;
+  display: flex;
+  align-items: center;
+}
+
+.col.s2 {
+  color: black;
+}
+
+.col.s2.input-field label.active {
+  font-size: 0.8rem;
+}
+
+.yellow-box {
+  background-color: yellow;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.col.s2.input-field label.active {
+  font-size: 0.8rem;
+}
+
+.btn-floating.waves-effect.waves-light.red {
+  /* Customize your styles here */
+
+  /* Add any other styles as needed */
+}
+
+
+

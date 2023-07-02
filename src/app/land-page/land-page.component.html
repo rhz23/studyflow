@@ -1,0 +1,24 @@
+<!-- intro -->
+<div id="painel-inicial" [hidden]="!isHidePanel"
+  class="intro z-depth-1 my-logo-text">
+  <h1>Keep your study flow</h1>
+
+</div>
+
+<div [hidden]="this.isHidePanel">
+  <app-pagina-inicial></app-pagina-inicial>
+</div>
+
+
+  <div id="painel-login" class="row" [hidden]="!isHidePanel">
+    <div class="col s12 m6 offset-m3">
+      <a routerLink="/login" (click)="togglePanel()">
+        <div
+          id="botao-login" class="card-panel black center">
+          <span class="white-text flow-text"> LOGIN </span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
