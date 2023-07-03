@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Book } from '../model/book';
+import { LivroService } from '../livro.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro-book',
@@ -7,8 +9,9 @@ import { Book } from '../model/book';
   styleUrls: ['./cadastro-book.component.css']
 })
 export class CadastroBookComponent{
-  livro: any = {};
   livros: any[] = [];
+
+  constructor(private router: Router, private livroService: LivroService) {}
 
   titleValue: string = '';
   isTitleLabelActive: boolean = false;
@@ -52,16 +55,8 @@ export class CadastroBookComponent{
     this.isActualPageLabelActive = this.actualPageValue.length > 0;
   }
 
-  adicionarLivro() {
-    this.livros.push({ ...this.livro });
-    this.livro = {};
-  }
-
   removerLivro(livro: any) {
-    const index = this.livros.indexOf(livro);
-    if (index !== -1) {
-      this.livros.splice(index, 1);
-    }
+    this.livroService.removeLivro(livro);
   }
 
   salvarLivros() {
@@ -75,13 +70,12 @@ export class CadastroBookComponent{
     this.actualPageValue = '';
     this.totalPageValue = '';
 
-  this.livros.push(newBook);
-
-  console.log(this.livros);
+  this.livroService.addLivro(newBook);
   }
 
-  cancelarCadastro() {
-    this.livros = [];
+  cancel(): void {
+    // Navigate back to books-card component
+    this.router.navigate(['/books-card']);
   }
 
   saveActualPage(livro: any) {

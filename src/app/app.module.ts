@@ -13,6 +13,14 @@ import { TodoCardComponent } from './todo-card/todo-card.component';
 import { LandPageComponent } from './land-page/land-page.component';
 import { CadastroBookComponent } from './cadastro-book/cadastro-book.component';
 import { LoginComponent } from './login/login.component';
+import { RouterModule, Routes } from '@angular/router';
+import { LivroService } from './livro.service';
+
+const routes: Routes = [
+  { path: '', component: LandPageComponent },
+  { path: 'cadastro-book', component: CadastroBookComponent },
+  { path: 'books-card', component: BooksCardComponent },
+];
 
 @NgModule({
   declarations: [
@@ -30,9 +38,12 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+    LivroService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
