@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { BookService } from '../book.service';
+import { Component, EventEmitter, Output, OnInit, ViewChild, Input } from '@angular/core';
 import { Book } from '../model/book';
-import { LivroService } from '../livro.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-book',
@@ -9,13 +10,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./cadastro-book.component.css']
 })
 export class CadastroBookComponent{
-  livros: any[] = [];
+  @ViewChild('form') form!: NgForm;
+  @Output() bookAdded = new EventEmitter<Book>();
+  @Input() books?:Book[];
 
-  constructor(private router: Router, private livroService: LivroService) {}
+  book!: Book;
+  //books?: Book[];
+
+  constructor(private router: Router, private bookService: BookService) {}
+
+  ngOnInit(): void {
+    //Shared.initializeWebStorage();
+    this.book = new Book('','','',new Date,0,0);
+    //this.books = this.bookService.getBooks();
+  }
 
   titleValue: string = '';
   isTitleLabelActive: boolean = false;
 
+  isSubmitted!: boolean;
+  isShowMessage: boolean = false;
+  isSuccess!: boolean;
+  message!: string;
+
+
+  //logicas de label
   onInputTitleChange(): void {
     this.isTitleLabelActive = this.titleValue.length > 0;
   }
@@ -55,11 +74,51 @@ export class CadastroBookComponent{
     this.isActualPageLabelActive = this.actualPageValue.length > 0;
   }
 
-  removerLivro(livro: any) {
-    this.livroService.removeLivro(livro);
+  //fim das logicas de label
+
+  removeBook(book: Book) {
+    this.bookService.removeBook(book);
   }
 
-  salvarLivros() {
+  onSubmit() {
+    this.isSubmitted = true;
+    if (!this.bookService.isExist(this.book.title)) {
+      this.bookService.save(this.book);
+    } else {
+      this.bookService.update(this.book);
+    }
+    this.bookAdded.emit(this.book);
+    this.isShowMessage = true;
+    this.isSuccess = true;
+    this.message = 'Cadastro realizado com sucesso!';
+    this.form.reset();
+    this.book = new Book('','','',new Date,0,0);
+    this.books = this.bookService.getBooks();
+  }
+
+  onEdit(book: Book) {
+    let clone = Book.clone(book);
+    this.book = clone;
+  }
+
+  onDelete(title: string) {
+    let confirmation = window.confirm('Você tem certeza que deseja remover ' + title);
+    if (!confirmation) {
+      return;
+    }
+
+    let response: boolean = this.bookService.delete(title);
+    this.isShowMessage = true;
+    this.isSuccess = response;
+    if (response) {
+      this.message = 'O livro foi removido com sucesso!';
+    } else {
+      this.message = 'Opps! O item não pode ser removido!';
+    }
+    this.books = this.bookService.getBooks();
+  }
+
+  save() {
     // Lógica para salvar os livros no backend
     const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue));
 
@@ -70,7 +129,7 @@ export class CadastroBookComponent{
     this.actualPageValue = '';
     this.totalPageValue = '';
 
-  this.livroService.addLivro(newBook);
+  this.bookService.addBooks(newBook);
   }
 
   cancel(): void {
@@ -78,8 +137,8 @@ export class CadastroBookComponent{
     this.router.navigate(['/books-card']);
   }
 
-  saveActualPage(livro: any) {
-    livro.actualPage = livro.actualPage;
+  saveActualPage(book: any) {
+    book.actualPage = book.actualPage;
   }
 
 }

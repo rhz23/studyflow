@@ -16,17 +16,30 @@
                   <div class="col s2">Title</div>
                   <div class="col s2">Writer</div>
                   <div class="col s2">Theme</div>
-                  <div class="col s1">Start Date</div>
-                  <div class="col s1">Actual Page</div>
-                  <div class="col s1">Total Page</div>
+                  <div class="col s1 center-align">Start Date</div>
+                  <div class="col s1 center-align">Page</div>
+                  <div class="col s1 center-align">Total Page</div>
                   <div class="col s2">Progress</div>
                 </div>
               </li>
               <li class="collection-item custom-collection-item">
-                <div class="row custom-row">
+                <form class="row custom-row" #form="ngForm" (ngSubmit)="onSubmit()">
                   <div class="col s2 input-field">
-                    <input id="title" type="text" [(ngModel)]="titleValue" (input)="onInputTitleChange()" class="validate">
+                    <input
+                      id="title"
+                      name="input-title"
+                      type="text"
+                      class="validate"
+                      [(ngModel)]="titleValue"
+                      pattern="^[A-Z].{0,199}$"
+                      #title="ngModel"
+                      required
+                      (input)="onInputTitleChange()"
+                    >
                     <label for="title" [class.active]="isTitleLabelActive">Title</label>
+                    <div class="red-text" [hidden]="title.valid || title.untouched">
+                      Por favor, informe o titulo do livro!
+                    </div>
                   </div>
                   <div class="col s2 input-field">
                     <input id="author" type="text" [(ngModel)]="authorValue" (input)="onInputAuthorChange()" class="validate">
@@ -48,32 +61,32 @@
                     <input id="totalPage" type="number" [(ngModel)]="totalPageValue" (input)="onInputTotalPageChange()" class="valitotalPage">
                     <label for="totalPage" [class.active]="isTotalPageLabelActive">TotalPage</label>
                   </div>
-                </div>
+                </form>
               </li>
-              <li class="collection-item " *ngFor="let livro of livros">
+              <li class="collection-item " *ngFor="let book of books">
                 <div class="row custom-row2">
-                  <div class="col s2">{{ livro.title }}</div>
-                  <div class="col s2">{{ livro.author }}</div>
-                  <div class="col s2">{{ livro.theme }}</div>
-                  <div class="col s1">{{ livro.startDate | date: 'dd/MM/yyyy' }}</div>
+                  <div class="col s2">{{ book.title }}</div>
+                  <div class="col s2">{{ book.author }}</div>
+                  <div class="col s2">{{ book.theme }}</div>
+                  <div class="col s1">{{ book.startDate | date: 'dd/MM/yyyy' }}</div>
                   <div class="col s1">
-                    <input id="editedActualPage" type="number" [(ngModel)]="livro.actualPage" [value]="livro.actualPage" class="validate">
+                    <input id="editedActualPage" type="number" [(ngModel)]="book.actualPage" [value]="book.actualPage" class="validate">
                   </div>
-                  <div class="col s1">{{ livro.totalPage }}</div>
+                  <div class="col s1">{{ book.totalPage }}</div>
                   <div class="col s2">
                     <div class="progress-container">
                       <div class="progress">
-                        <div class="determinate" [style.width.%]="(livro.actualPage / livro.totalPage) * 100"></div>
+                        <div class="determinate" [style.width.%]="(book.actualPage / book.totalPage) * 100"></div>
                       </div>
                     </div>
                   </div>
                   <div class="col s1">
-                    <a class="btn waves-effect waves-light red" (click)="removerLivro(livro)">
+                    <a class="btn waves-effect waves-light red" (click)="removeBook(book)">
                       <i class="material-icons">delete</i>
                     </a>
                   </div>
                   <div class="col s1">
-                    <a class="btn waves-effect waves-light" (click)="saveActualPage(livro)">
+                    <a class="btn waves-effect waves-light" (click)="saveActualPage(book)">
                       <i class="material-icons">save</i>
                     </a>
                   </div>
@@ -85,14 +98,20 @@
       </div>
     </div>
 
-    <div class="fixed-action-btn">
-      <button class="btn waves-effect waves-light" type="submit" name="action" (click)="salvarLivros()">Submit
+<div class="fixed-action-btn">
+  <div class="row">
+    <div class="col s6">
+      <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!form.valid" (click)="save()">Submit
         <i class="material-icons right">send</i>
       </button>
+    </div>
+    <div class="col s6">
       <button class="btn waves-effect waves-light red" type="button" name="cancel" (click)="cancel()">Cancel
         <i class="material-icons right">close</i>
       </button>
     </div>
+  </div>
+</div>
 
   </div>
 

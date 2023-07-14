@@ -36,10 +36,9 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-RodrigoHenriqueZaninelli-Atividade*.zip
+RodrigoHenriqueZaninelli-Atividade8.zip
 
 # System files
 .DS_Store
 Thumbs.db
 node_modules
-.angular

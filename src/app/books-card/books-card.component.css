@@ -1,6 +1,18 @@
 @import "~materialize-css/dist/css/materialize.css";
 @import "~material-icons/iconfont/material-icons.css";
 
+.custom-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .collection-card {
   margin-top: 1px;
 }
@@ -38,6 +50,12 @@
 
 .col.s2 {
   color: black;
+}
+
+.center-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .yellow-box {

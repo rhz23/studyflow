@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { LivroService } from '../livro.service';
+import { Component } from '@angular/core';
+import { Book } from '../model/book';
+import { BookService } from '../book.service';
 
 @Component({
   selector: 'app-books-card',
@@ -7,12 +8,14 @@ import { LivroService } from '../livro.service';
   styleUrls: ['./books-card.component.css']
 })
 export class BooksCardComponent {
-  livros: any[] = [];
+  books?: Book[];
+  book!: Book;
 
-  constructor(private livroService: LivroService) {}
+  constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
-    this.livros = this.livroService.getLivros();
+    this.books = this.bookService.getBooks();
   }
 
 }
+

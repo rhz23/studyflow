@@ -8,4 +8,16 @@ export class Book {
     this.totalPage = totalPage;
     this.actualPage = actualPage;
   }
+
+  public static clone(book: Book) {
+    let b: Book = new Book(book.title, book.author, book.theme, book.startDate, book.totalPage, book.actualPage);
+    b.title = book.title;
+    b.author = book.author;
+    b.title = book.title;
+    b.theme = book.theme;
+    b.startDate = book.startDate;
+    b.totalPage = book.totalPage;
+    b.actualPage = book.actualPage;
+    return b;
+  }
 }

@@ -16,24 +16,24 @@
                   <div class="col s2">Title</div>
                   <div class="col s2">Writer</div>
                   <div class="col s2">Theme</div>
-                  <div class="col s2">Start Date</div>
-                  <div class="col s1">Actual Page</div>
-                  <div class="col s1">Total Page</div>
+                  <div class="col s1 center-align">Start Date</div>
+                  <div class="col s1 center-align">Page</div>
+                  <div class="col s1 center-align">Total Page</div>
                   <div class="col s2">Progress</div>
                 </div>
               </li>
-              <li class="collection-item custom-collection-item" *ngFor="let livro of livros">
+              <li class="collection-item custom-collection-item">
                 <div class="row custom-row2">
-                  <div class="col s2">{{ livro.title }}</div>
-                  <div class="col s2">{{ livro.author }}</div>
-                  <div class="col s2">{{ livro.theme }}</div>
-                  <div class="col s1">{{ livro.startDate | date: 'dd/MM/yyyy' }}</div>
-                  <div class="col s1">{{ livro.actualPage}}</div>
-                  <div class="col s1">{{ livro.totalPage }}</div>
+                  <div class="col s2">{{ book.title }}</div>
+                  <div class="col s2">{{ book.author }}</div>
+                  <div class="col s2">{{ book.theme }}</div>
+                  <div class="col s1 center-align">{{ book.startDate | date: 'dd/MM/yyyy' }}</div>
+                  <div class="col s1 center-align">{{ book.actualPage}}</div>
+                  <div class="col s1 center-align">{{ book.totalPage }}</div>
                   <div class="col s2">
                     <div class="progress-container">
                       <div class="progress">
-                        <div class="determinate" [style.width.%]="(livro.actualPage / livro.totalPage) * 100"></div>
+                        <div class="determinate" [style.width.%]="(book.actualPage / book.totalPage) * 100"></div>
                       </div>
                     </div>
                   </div>
