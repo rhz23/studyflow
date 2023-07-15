@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LivroService } from '../livro.service';
+import { LivroService } from '../book.service';
+import {Book} from "../model/book";
 
 @Component({
   selector: 'app-books-card',
@@ -7,12 +8,14 @@ import { LivroService } from '../livro.service';
   styleUrls: ['./books-card.component.css']
 })
 export class BooksCardComponent {
-  livros: any[] = [];
+  livros: Book[] = [];
 
   constructor(private livroService: LivroService) {}
 
   ngOnInit(): void {
-    this.livros = this.livroService.getLivros();
+    this.livroService.getBooks().then((livros) => {
+      this.livros = livros
+    })
   }
 
 }

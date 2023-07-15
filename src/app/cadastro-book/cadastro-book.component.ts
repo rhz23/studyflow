@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Book } from '../model/book';
-import { LivroService } from '../livro.service';
+import { LivroService } from '../book.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +12,12 @@ export class CadastroBookComponent{
   livros: any[] = [];
 
   constructor(private router: Router, private livroService: LivroService) {}
+
+  ngOnInit(): void {
+    this.livroService.getBooks().then((livros) => {
+      this.livros = livros
+    })
+  }
 
   titleValue: string = '';
   isTitleLabelActive: boolean = false;
@@ -56,12 +62,12 @@ export class CadastroBookComponent{
   }
 
   removerLivro(livro: any) {
-    this.livroService.removeLivro(livro);
+    this.livroService.removeBook(livro).then((_) => this.livroService.getBooks().then((l) => this.livros = l));
   }
 
   salvarLivros() {
     // Lógica para salvar os livros no backend
-    const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue));
+    const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue), "");
 
     this.titleValue = '';
     this.authorValue = '';
@@ -70,7 +76,7 @@ export class CadastroBookComponent{
     this.actualPageValue = '';
     this.totalPageValue = '';
 
-  this.livroService.addLivro(newBook);
+    this.livroService.addBook(newBook).then((_) => this.livroService.getBooks().then((l) => this.livros = l));
   }
 
   cancel(): void {

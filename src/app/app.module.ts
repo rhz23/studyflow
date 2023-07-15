@@ -14,7 +14,7 @@ import { LandPageComponent } from './land-page/land-page.component';
 import { CadastroBookComponent } from './cadastro-book/cadastro-book.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
-import { LivroService } from './livro.service';
+import { LivroService } from './book.service';
 
 const routes: Routes = [
   { path: '', component: LandPageComponent },
