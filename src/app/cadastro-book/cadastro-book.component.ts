@@ -9,20 +9,19 @@ import { NgForm } from '@angular/forms';
   templateUrl: './cadastro-book.component.html',
   styleUrls: ['./cadastro-book.component.css']
 })
-export class CadastroBookComponent{
+export class CadastroBookComponent implements OnInit {
   @ViewChild('form') form!: NgForm;
   @Output() bookAdded = new EventEmitter<Book>();
-  @Input() books?:Book[];
 
   book!: Book;
-  //books?: Book[];
+  books?: Book[];
 
   constructor(private router: Router, private bookService: BookService) {}
 
   ngOnInit(): void {
     //Shared.initializeWebStorage();
     this.book = new Book('','','',new Date,0,0);
-    //this.books = this.bookService.getBooks();
+    this.books = this.bookService.getBooks();
   }
 
   titleValue: string = '';
@@ -81,9 +80,10 @@ export class CadastroBookComponent{
   }
 
   onSubmit() {
+    console.log("onSubmit");
     this.isSubmitted = true;
     if (!this.bookService.isExist(this.book.title)) {
-      this.bookService.save(this.book);
+      this.bookService.addBooks(this.book);
     } else {
       this.bookService.update(this.book);
     }

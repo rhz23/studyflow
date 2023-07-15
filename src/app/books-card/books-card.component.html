@@ -22,7 +22,7 @@
                   <div class="col s2">Progress</div>
                 </div>
               </li>
-              <li class="collection-item custom-collection-item">
+              <li class="collection-item custom-collection-item" *ngFor="let book of books">
                 <div class="row custom-row2">
                   <div class="col s2">{{ book.title }}</div>
                   <div class="col s2">{{ book.author }}</div>
