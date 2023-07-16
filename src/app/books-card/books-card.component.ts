@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { LivroService } from '../book.service';
-import {Book} from "../model/book";
+import { Component, Input, OnInit } from '@angular/core';
+import { Book } from '../model/book';
+import { BookService } from '../book.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-books-card',
@@ -8,14 +9,18 @@ import {Book} from "../model/book";
   styleUrls: ['./books-card.component.css']
 })
 export class BooksCardComponent {
-  livros: Book[] = [];
 
-  constructor(private livroService: LivroService) {}
+  @Input() books:Book[] = [];
+  book!: Book;
+
+
+  constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
-    this.livroService.getBooks().then((livros) => {
-      this.livros = livros
+    this.bookService.getBooks().then((books) => {
+      this.books = books
     })
   }
 
 }
+

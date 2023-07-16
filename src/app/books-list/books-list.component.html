@@ -1,0 +1,22 @@
+<li class="collection-item " *ngFor="let book of books">
+  <div class="row custom-row2">
+    <div class="col s2">{{ book.title }}</div>
+    <div class="col s2">{{ book.author }}</div>
+    <div class="col s2">{{ book.theme }}</div>
+    <div class="col s1">{{ book.startDate | date: 'dd/MM/yyyy' }}</div>
+    <div class="col s1 center-align">{{ book.actualPage}}</div>
+    <div class="col s1">{{ book.totalPage }}</div>
+    <div class="col s2">
+      <div class="progress-container">
+        <div class="progress">
+          <div class="determinate" [style.width.%]="(book.actualPage / book.totalPage) * 100"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col s1">
+      <a class="btn waves-effect waves-light red" (click)="removeBook(book)">
+        <i class="material-icons">delete</i>
+      </a>
+    </div>
+  </div>
+</li>

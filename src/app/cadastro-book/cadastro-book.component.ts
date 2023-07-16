@@ -1,27 +1,42 @@
-import { Component } from '@angular/core';
+import { BookService } from '../book.service';
+import { Component, EventEmitter, Output, OnInit, ViewChild, Input } from '@angular/core';
 import { Book } from '../model/book';
-import { LivroService } from '../book.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-book',
   templateUrl: './cadastro-book.component.html',
   styleUrls: ['./cadastro-book.component.css']
 })
-export class CadastroBookComponent{
-  livros: any[] = [];
+export class CadastroBookComponent implements OnInit {
+  @ViewChild('form') form!: NgForm;
+  @Output() bookAdded = new EventEmitter<Book>();
 
-  constructor(private router: Router, private livroService: LivroService) {}
+  book!: Book;
+  books: Book[] = [];
+
+  constructor(private router: Router, private bookService: BookService) {}
 
   ngOnInit(): void {
-    this.livroService.getBooks().then((livros) => {
-      this.livros = livros
+    //Shared.initializeWebStorage();
+    //this.book = new Book('','','',new Date,0,0,'');
+
+    this.bookService.getBooks().then((books) => {
+      this.books = books;
     })
   }
 
   titleValue: string = '';
   isTitleLabelActive: boolean = false;
 
+  isSubmitted!: boolean;
+  isShowMessage: boolean = false;
+  isSuccess!: boolean;
+  message!: string;
+
+
+  //logicas de label
   onInputTitleChange(): void {
     this.isTitleLabelActive = this.titleValue.length > 0;
   }
@@ -61,13 +76,56 @@ export class CadastroBookComponent{
     this.isActualPageLabelActive = this.actualPageValue.length > 0;
   }
 
-  removerLivro(livro: any) {
-    this.livroService.removeBook(livro).then((_) => this.livroService.getBooks().then((l) => this.livros = l));
+  //fim das logicas de label
+
+  removeBook(book: Book) {
+    this.bookService.removeBook(book);
+    this.bookService.removeBook(book).then((_) => this.bookService.getBooks().then((l) => this.books = l) );
   }
 
-  salvarLivros() {
+  // onSubmit() {
+  //   console.log("onSubmit");
+  //   this.isSubmitted = true;
+  //   if (!this.bookService.isExist(this.book.title)) {
+  //     this.bookService.addBooks(this.book);
+  //   } else {
+  //     this.bookService.update(this.book);
+  //   }
+  //   this.bookAdded.emit(this.book);
+  //   this.isShowMessage = true;
+  //   this.isSuccess = true;
+  //   this.message = 'Cadastro realizado com sucesso!';
+  //   this.form.reset();
+  //   this.book = new Book('','','',new Date,0,0);
+  //   this.books = this.bookService.getBooks();
+  // }
+
+  onEdit(book: Book) {
+    let clone = Book.clone(book);
+    this.book = clone;
+  }
+
+  onDelete(title: string) {
+    let confirmation = window.confirm('Você tem certeza que deseja remover ' + title);
+    if (!confirmation) {
+      return;
+    }
+
+    let response: boolean = this.bookService.delete(title);
+    this.isShowMessage = true;
+    this.isSuccess = response;
+    if (response) {
+      this.message = 'O livro foi removido com sucesso!';
+    } else {
+      this.message = 'Opps! O item não pode ser removido!';
+    }
+    this.books = this.bookService.getBooks();
+  }
+
+
+  save() {
     // Lógica para salvar os livros no backend
-    const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue), "");
+    const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue),);
 
     this.titleValue = '';
     this.authorValue = '';
@@ -76,7 +134,7 @@ export class CadastroBookComponent{
     this.actualPageValue = '';
     this.totalPageValue = '';
 
-    this.livroService.addBook(newBook).then((_) => this.livroService.getBooks().then((l) => this.livros = l));
+  this.bookService.addBooks(newBook).then(() => this.books = this.bookService.getBooks());
   }
 
   cancel(): void {
@@ -84,8 +142,8 @@ export class CadastroBookComponent{
     this.router.navigate(['/books-card']);
   }
 
-  saveActualPage(livro: any) {
-    livro.actualPage = livro.actualPage;
+  saveActualPage(book: any) {
+    book.actualPage = book.actualPage;
   }
 
 }

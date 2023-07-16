@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import {Book} from "./model/book";
+import { Injectable, OnInit } from '@angular/core';
+import { Book } from './model/book';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LivroService {
+
+
+export class BookService {
 
   private apiURL = "http://localhost:3000/books"
 
