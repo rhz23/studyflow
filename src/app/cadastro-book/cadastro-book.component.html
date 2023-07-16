@@ -30,7 +30,7 @@
                       name="input-title"
                       type="text"
                       class="validate"
-                      [(ngModel)]="titleValue"
+                      [(ngModel)]="book.title"
                       pattern="^[A-Z].{0,199}$"
                       #title="ngModel"
                       required
@@ -42,28 +42,39 @@
                     </div>
                   </div>
                   <div class="col s2 input-field">
-                    <input id="author" type="text" [(ngModel)]="authorValue" (input)="onInputAuthorChange()" class="validate">
+                    <input
+                      id="author"
+                      name="input-author"
+                      type="text"
+                      pattern="^(\s?[A-ZÀ-Ú][a-zà-ú]*)+(\s[a-zà-ú]*)?(\s[A-ZÀ-Ú][a-zà-ú]*)+"
+                      [(ngModel)]="book.author"
+                      #author="ngModel"
+                      (input)="onInputAuthorChange()"
+                      class="validate">
                     <label for="author" [class.active]="isAuthorLabelActive">Author</label>
+                    <div class="red-text" [hidden]="author.valid || author.untouched">
+                      Por favor, informe o autor do livro!
+                    </div>
                   </div>
                   <div class="col s2 input-field">
-                    <input id="theme" type="text" [(ngModel)]="themeValue" (input)="onInputThemeChange()" class="validate">
+                    <input id="theme" type="text" name="input-theme" [(ngModel)]="book.theme" (input)="onInputThemeChange()" class="validate">
                     <label for="theme" [class.active]="isThemeLabelActive">Theme</label>
                   </div>
                   <div class="col s1 input-field">
-                    <input id="date" type="text" [(ngModel)]="dateValue" (input)="onInputDateChange()" class="validate">
-                    <label for="date" [class.active]="isDateLabelActive">Date</label>
+                    <input id="date" type="text" name="input-startDate" [(ngModel)]="book.startDate" class="validate">
                   </div>
                   <div class="col s1 input-field">
-                    <input id="actualPage" type="number" [(ngModel)]="actualPageValue" (input)="onInputActualPageChange()" class="valiactualPage">
+                    <input id="actualPage" type="number" name="input-actualPage" [(ngModel)]="book.actualPage" (input)="onInputActualPageChange()" class="valiactualPage">
                     <label for="actualPage" [class.active]="isActualPageLabelActive">ActualPage</label>
                   </div>
                   <div class="col s1 input-field">
-                    <input id="totalPage" type="number" [(ngModel)]="totalPageValue" (input)="onInputTotalPageChange()" class="valitotalPage">
+                    <input id="totalPage" type="number" name="input-totalPage" [(ngModel)]="book.totalPage" (input)="onInputTotalPageChange()" class="valitotalPage">
                     <label for="totalPage" [class.active]="isTotalPageLabelActive">TotalPage</label>
                   </div>
                 </form>
               </li>
-              <li class="collection-item " *ngFor="let book of books">
+              <app-books-list [books]="books"></app-books-list>
+              <!-- <li class="collection-item " *ngFor="let book of books">
                 <div class="row custom-row2">
                   <div class="col s2">{{ book.title }}</div>
                   <div class="col s2">{{ book.author }}</div>
@@ -91,7 +102,7 @@
                     </a>
                   </div>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -101,7 +112,7 @@
 <div class="fixed-action-btn">
   <div class="row">
     <div class="col s6">
-      <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!form.valid" (click)="save()">Submit
+      <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!form.valid" (click)="onSubmit()">Submit
         <i class="material-icons right">send</i>
       </button>
     </div>

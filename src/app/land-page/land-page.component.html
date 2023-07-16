@@ -6,10 +6,8 @@
 </div>
 
 <div [hidden]="this.isHidePanel">
-  <!--
-  <app-books-card></app-books-card>
-  -->
-  <app-cadastro-book></app-cadastro-book>
+  <app-books-card [books]="books"></app-books-card>
+  <!-- <app-cadastro-book [books]="books"></app-cadastro-book> -->
 </div>
 
 

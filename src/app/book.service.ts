@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Book } from './model/book';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookService {
-  books!: Book[];
+export class BookService implements OnInit {
+  books: Book[] = [];
 
   //private livros: any[] = [];
 
   constructor() {
 
+  }
+  ngOnInit(): void {
+    this.books = this.getBooks();
   }
 
   save(book: Book){}
@@ -33,11 +36,13 @@ export class BookService {
   }
 
   getBooks(): Book[] {
+    this.books = JSON.parse(localStorage.getItem('books') || "") as Book[];
     return this.books;
   }
 
   addBooks(book: Book): void {
     this.books.push(book);
+    localStorage.setItem('books', JSON.stringify(this.books));
   }
 
   removeBook(book: Book) {

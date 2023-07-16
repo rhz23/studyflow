@@ -15,6 +15,7 @@ import { CadastroBookComponent } from './cadastro-book/cadastro-book.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BookService } from './book.service';
+import { BooksListComponent } from './books-list/books-list.component';
 
 const routes: Routes = [
   { path: '', component: LandPageComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
     TodoCardComponent,
     LandPageComponent,
     CadastroBookComponent,
-    LoginComponent
+    LoginComponent,
+    BooksListComponent
   ],
   imports: [
     BrowserModule,
