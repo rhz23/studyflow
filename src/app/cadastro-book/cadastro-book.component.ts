@@ -20,7 +20,7 @@ export class CadastroBookComponent implements OnInit {
 
   ngOnInit(): void {
     //Shared.initializeWebStorage();
-    //this.book = new Book('','','',new Date,0,0,'');
+    this.book = new Book('','','',new Date,0,0,'');
 
     this.bookService.getBooks().then((books) => {
       this.books = books;
@@ -36,50 +36,50 @@ export class CadastroBookComponent implements OnInit {
   message!: string;
 
 
-  //logicas de label
+  // logicas de label
   onInputTitleChange(): void {
-    this.isTitleLabelActive = this.titleValue.length > 0;
+    this.isTitleLabelActive = this.book.title.length > 0;
   }
 
   authorValue: string = '';
   isAuthorLabelActive: boolean = false;
 
   onInputAuthorChange(): void {
-    this.isAuthorLabelActive = this.authorValue.length > 0;
+    this.isAuthorLabelActive = this.book.author.length > 0;
   }
 
   themeValue: string = '';
   isThemeLabelActive: boolean = false;
 
   onInputThemeChange(): void {
-    this.isThemeLabelActive = this.themeValue.length > 0;
+    this.isThemeLabelActive = this.book.theme.length > 0;
   }
 
   dateValue: string = '';
   isDateLabelActive: boolean = false;
 
   onInputDateChange(): void {
-    this.isDateLabelActive = this.dateValue.length > 0;
+    this.isDateLabelActive = this.book.startDate != null;
   }
 
   totalPageValue: string = '';
   isTotalPageLabelActive: boolean = false;
 
   onInputTotalPageChange(): void {
-    this.isTotalPageLabelActive = this.totalPageValue.length > 0;
+    this.isTotalPageLabelActive = this.book.totalPage > 0;
   }
 
   actualPageValue: string = '';
   isActualPageLabelActive: boolean = false;
 
   onInputActualPageChange(): void {
-    this.isActualPageLabelActive = this.actualPageValue.length > 0;
+    this.isActualPageLabelActive = this.book.actualPage != 0;
   }
 
   //fim das logicas de label
 
   removeBook(book: Book) {
-    this.bookService.removeBook(book);
+    // this.bookService.removeBook(book);
     this.bookService.removeBook(book).then((_) => this.bookService.getBooks().then((l) => this.books = l) );
   }
 
@@ -105,27 +105,29 @@ export class CadastroBookComponent implements OnInit {
     this.book = clone;
   }
 
-  onDelete(title: string) {
-    let confirmation = window.confirm('Você tem certeza que deseja remover ' + title);
+  onDelete(book: Book) {
+    let confirmation = window.confirm('Você tem certeza que deseja remover ' + book.title);
     if (!confirmation) {
       return;
     }
 
-    let response: boolean = this.bookService.delete(title);
-    this.isShowMessage = true;
-    this.isSuccess = response;
-    if (response) {
-      this.message = 'O livro foi removido com sucesso!';
-    } else {
-      this.message = 'Opps! O item não pode ser removido!';
-    }
-    this.books = this.bookService.getBooks();
+    // let response: boolean = this.removeBook(book);
+    // this.isShowMessage = true;
+    // this.isSuccess = response;
+    // if (response) {
+    //   this.message = 'O livro foi removido com sucesso!';
+    // } else {
+    //   this.message = 'Opps! O item não pode ser removido!';
+    // }
+    // this.books = this.bookService.getBooks();
   }
 
 
   save() {
     // Lógica para salvar os livros no backend
-    const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue),);
+    // const newBook = new Book(this.titleValue, this.authorValue, this.themeValue, new Date(this.dateValue), parseInt(this.actualPageValue) , parseInt(this.totalPageValue),"");
+
+    this.bookService.addBook(this.book).then((_) => this.bookService.getBooks().then((l) => this.books = l));
 
     this.titleValue = '';
     this.authorValue = '';
@@ -134,7 +136,7 @@ export class CadastroBookComponent implements OnInit {
     this.actualPageValue = '';
     this.totalPageValue = '';
 
-  this.bookService.addBooks(newBook).then(() => this.books = this.bookService.getBooks());
+
   }
 
   cancel(): void {

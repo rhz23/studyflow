@@ -10,16 +10,16 @@ import { Book } from '../model/book';
 })
 export class BooksListComponent implements OnInit {
   bookService = new BookService;
-  @Input() books?:Book[];
+  @Input() books:Book[] = [];
 
 
 
   ngOnInit(): void {
-    this.books = this.bookService.getBooks();
+    // this.books = this.bookService.getBooks();
   }
 
   removeBook(book: Book) {
-    this.bookService.removeBook(book);
+    this.bookService.removeBook(book).then((_) => this.bookService.getBooks().then((l) => this.books = l) );
   }
 
 }

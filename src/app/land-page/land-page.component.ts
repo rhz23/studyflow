@@ -9,13 +9,13 @@ import { Book } from '../model/book';
 })
 export class LandPageComponent implements OnInit {
   isHidePanel = true;
-  books?: Book[];
-  bookService = new BookService;
+  // books?: Book[];
+  // bookService = new BookService;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.books = this.bookService.getBooks();
+    // this.books = this.bookService.getBooks();
 
   }
 

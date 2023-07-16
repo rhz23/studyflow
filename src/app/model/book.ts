@@ -11,7 +11,7 @@ export class Book {
   }
 
   public static clone(book: Book) {
-    let b: Book = new Book(book.title, book.author, book.theme, book.startDate, book.totalPage, book.actualPage);
+    let b: Book = new Book(book.title, book.author, book.theme, book.startDate, book.totalPage, book.actualPage, book.id);
     b.title = book.title;
     b.author = book.author;
     b.title = book.title;
@@ -19,6 +19,7 @@ export class Book {
     b.startDate = book.startDate;
     b.totalPage = book.totalPage;
     b.actualPage = book.actualPage;
+    b.id = book.id;
     return b;
   }
 }
