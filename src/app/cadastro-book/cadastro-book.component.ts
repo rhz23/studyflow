@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output, OnInit, ViewChild, Input } from '@angu
 import { Book } from '../model/book';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro-book',
@@ -22,9 +23,8 @@ export class CadastroBookComponent implements OnInit {
     //Shared.initializeWebStorage();
     this.book = new Book('','','',new Date,0,0,'');
 
-    this.bookService.getBooks().then((books) => {
-      this.books = books;
-    })
+    from(this.bookService.getBooks()).subscribe((books) => {this.books = books;})
+
   }
 
   titleValue: string = '';
@@ -80,6 +80,7 @@ export class CadastroBookComponent implements OnInit {
 
   removeBook(book: Book) {
     // this.bookService.removeBook(book);
+
     this.bookService.removeBook(book).then((_) => this.bookService.getBooks().then((l) => this.books = l) );
   }
 
@@ -129,12 +130,12 @@ export class CadastroBookComponent implements OnInit {
 
     this.bookService.addBook(this.book).then((_) => this.bookService.getBooks().then((l) => this.books = l));
 
-    this.titleValue = '';
-    this.authorValue = '';
-    this.themeValue = '';
-    this.dateValue = '';
-    this.actualPageValue = '';
-    this.totalPageValue = '';
+    this.book.title = '';
+    this.book.author = '';
+    this.book.theme = '';
+    this.book.startDate = new Date;
+    this.book.actualPage = 0;
+    this.book.totalPage = 0;
 
 
   }

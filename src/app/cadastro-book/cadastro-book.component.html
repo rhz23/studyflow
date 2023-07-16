@@ -61,7 +61,7 @@
                     <label for="theme" [class.active]="isThemeLabelActive">Theme</label>
                   </div>
                   <div class="col s1 input-field">
-                    <input id="date" type="text" name="input-startDate" [(ngModel)]="book.startDate" class="validate">
+                    <input id="date" type="date" name="input-startDate" [(ngModel)]="book.startDate" class="validate" datetime="dd-MM-yyyy">
                   </div>
                   <div class="col s1 input-field">
                     <input id="actualPage" type="number" name="input-actualPage" [(ngModel)]="book.actualPage" (input)="onInputActualPageChange()" class="valiactualPage">
@@ -73,7 +73,7 @@
                   </div>
                 </form>
               </li>
-              <app-books-list [books]="books"></app-books-list>
+              <app-books-list [books]="books" [showRemoveButton]="true"></app-books-list>
               <!-- <li class="collection-item " *ngFor="let book of books">
                 <div class="row custom-row2">
                   <div class="col s2">{{ book.title }}</div>

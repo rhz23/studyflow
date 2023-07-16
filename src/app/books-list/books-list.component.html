@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="col s1">
+    <div class="col s1" *ngIf="showRemoveButton">
       <a class="btn waves-effect waves-light red" (click)="removeBook(book)">
         <i class="material-icons">delete</i>
       </a>

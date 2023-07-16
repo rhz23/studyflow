@@ -11,8 +11,7 @@ import { Book } from '../model/book';
 export class BooksListComponent implements OnInit {
   bookService = new BookService;
   @Input() books:Book[] = [];
-
-
+  @Input() showRemoveButton = false;
 
   ngOnInit(): void {
     // this.books = this.bookService.getBooks();
