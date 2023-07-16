@@ -44,15 +44,9 @@
       "actualPage": 6,
       "totalPage": 10,
       "id": 6
-    },
-    {
-      "title": "Asasa",
-      "author": "Asas Ass",
-      "theme": "SSSSSS",
-      "startDate": "2023-07-29",
-      "actualPage": 2,
-      "totalPage": 7,
-      "id": 7
     }
-  ]
+  ],
+  "profile": {
+    "name": "rhz23"
+  }
 }
