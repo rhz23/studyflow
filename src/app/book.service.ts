@@ -8,7 +8,7 @@ import { Book } from './model/book';
 
 export class BookService {
 
-  private apiURL = "https://my-json-server.typicode.com/rhz23/studyflow"
+  private apiURL = "http://localhost:3000/books"
 
   constructor() {}
 
