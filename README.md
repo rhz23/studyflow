@@ -10,7 +10,11 @@ O frontend da aplicação foi desenvolvido com Angular e o backend foi simulado 
 
 ## Endereço de Deploy - GitHub Pages
 
-*Em breve*
+[*Em breve*](https://rhz23.github.io/studyflow/)
+
+## Link para explicação do projeto PDF ##
+
+https://drive.google.com/file/d/1rPIL0IVb_YfYi6-EkwGRj4ZMvO2HXvTM/view?usp=drive_link
 
 ## Protótipo
 
