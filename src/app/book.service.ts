@@ -8,7 +8,7 @@ import { Book } from './model/book';
 
 export class BookService {
 
-  private apiURL = "http://localhost:3000/books"
+  private apiURL = "https://studyflow-db.onrender.com/books"
 
   constructor() {}
 
